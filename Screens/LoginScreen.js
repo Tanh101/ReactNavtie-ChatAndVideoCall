@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
 import { Button, TextInput, Image, StatusBar } from "react-native";
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState(""); 
   const [password, setPassword] = useState(""); 
 
@@ -44,8 +44,9 @@ const LoginScreen = () => {
       </TouchableOpacity>
       <Text
         style={styles.registerTextStyle}
+        onPress={()=> navigation.navigate('Register')}
       >
-        New Here ? Register
+        New here ? Register
       </Text>
     </View>
   );
