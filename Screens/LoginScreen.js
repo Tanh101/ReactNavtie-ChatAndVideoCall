@@ -1,11 +1,41 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, TextInput, Image, StatusBar } from "react-native";
+import { auth } from "../firebase";
+import { useNavigation } from "@react-navigation/native";
 const LoginScreen = () => {
-  const [email, setEmail] = useState(""); 
-  const [password, setPassword] = useState(""); 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigation = useNavigation();
 
-  const Signin = () =>{}
+  useEffect(( )=> {
+    const unsubcribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        navigation.replace("Home");
+      }
+    })
+    return unsubcribe;
+  }, [])
+
+  const Signup = () => {
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        console.log('Registered with: ', user.email);
+      })
+      .catch(error => alert(error.message))
+  }
+
+  const handleLogin = () => {
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        console.log('Logged in with: ', user.email);
+      })
+      .catch(error => alert(error.message))
+  }
   return (
     <View style={styles.mainBody}>
       <StatusBar styles="light" />
@@ -38,8 +68,8 @@ const LoginScreen = () => {
         />
       </View>
 
-      <TouchableOpacity style={styles.buttonStyle} activeOpacity={0.5} 
-      onPress={Signin}>
+      <TouchableOpacity style={styles.buttonStyle} activeOpacity={0.5}
+        onPress={handleLogin}>
         <Text style={styles.buttonTextStyle}>LOGIN</Text>
       </TouchableOpacity>
       <Text
