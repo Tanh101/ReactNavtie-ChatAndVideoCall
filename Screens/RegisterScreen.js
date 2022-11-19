@@ -8,19 +8,29 @@ import {
 } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
+import { auth } from "../firebase";
 
 const RegisterScreen = ({ navigation }) => {
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-//   useLayoutEffect(() => {
-//     navigation.setOptions({
-//         headerBackTitle: "Back to Login",
-//     });
-//   }, [navigation]);
+  //   useLayoutEffect(() => {
+  //     navigation.setOptions({
+  //         headerBackTitle: "Back to Login",
+  //     });
+  //   }, [navigation]);
 
-  const register = () =>{}
+  const register = () => {
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        console.log('Registered with: ', user.email);
+      })
+      .catch(error => alert(error.message))
+  }
+
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.mainBody}>
       <StatusBar style="light" />
@@ -64,7 +74,7 @@ const RegisterScreen = ({ navigation }) => {
       </View>
 
       <TouchableOpacity style={styles.buttonStyle} activeOpacity={0.5}
-      onPress={register}>
+        onPress={register}>
         <Text style={styles.buttonTextStyle}>REGISTER</Text>
       </TouchableOpacity>
       <Text
