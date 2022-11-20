@@ -42,7 +42,8 @@ const HomeScreen = ({ navigation }) => {
           <TouchableOpacity activeOpacity={0.5}>
             <Icon name="camera" size={23} color="white" />
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.5}>
+          <TouchableOpacity activeOpacity={0.5}
+          onPress={()=> navigation.navigate("AddChat")}>
             <Icon name="pencil" size={23} color="white" />
           </TouchableOpacity>
         </View>
