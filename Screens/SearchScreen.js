@@ -12,6 +12,7 @@ import { StatusBar } from "expo-status-bar";
 import { auth, db } from "../firebase";
 import SearchBar from "react-native-dynamic-search-bar"
 import UserListItem from "../components/UserListItem";
+import * as firebase from "firebase"
 
 
 const SearchScreen = ({ navigation }) => {
@@ -49,7 +50,39 @@ const SearchScreen = ({ navigation }) => {
             auth.currentUser.uid > user.uid
                 ? auth.currentUser.uid + user.uid
                 : user.uid + auth.currentUser.uid;
-        console.log(combinedId);
+
+        db.collection('chats').doc(combinedId)
+            .get().then(
+                async doc => {
+                    if (!doc.exists) {
+                        // crate a chat in chats collection
+                        db.collection("chats")
+                            .doc(combinedId)
+                            .set({ directChatname: [
+                                auth.currentUser.displayName,
+                                user.displayName
+                            ]})
+                        // crate user chats
+                        const userChatsRef1 = db.collection('userChats').doc(auth.currentUser.uid);
+                        const res1 = await userChatsRef1.update({
+                            [combinedId + ".userInfo"]: {
+                                uid: user.uid,
+                                displayName: user.displayName,
+                                imageUrl: user.imageUrl,
+                            },
+                            [combinedId + ".date"]: firebase.firestore.FieldValue.serverTimestamp(),
+                        });
+                        const userChatsRef2 = db.collection('userChats').doc(user.uid);
+                        const res2 = await userChatsRef2.update({
+                            [combinedId + ".userInfo"]: {
+                                uid: auth.currentUser.uid,
+                                displayName: auth.currentUser.displayName,
+                                imageUrl: auth.currentUser.photoURL,
+                            },
+                            [combinedId + ".date"]: firebase.firestore.FieldValue.serverTimestamp(),
+                        });
+                    }
+                });
         navigation.navigate('ChatScreen', {
             id,
             chatName,

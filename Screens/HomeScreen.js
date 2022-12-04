@@ -23,8 +23,8 @@ const HomeScreen = ({ navigation }) => {
   };
 
   const profileUser = () => {
-    navigation.navigate("ProfileScreen");
-  };
+    navigation.navigate("ProfileScreen")
+  }
   useEffect(() => {
     const unsubsribe = db.collection("chats").onSnapshot((snapshot) =>
       setChats(
@@ -67,17 +67,20 @@ const HomeScreen = ({ navigation }) => {
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
-            width: 65,
+            width: 70,
           }}
         >
-          <TouchableOpacity activeOpacity={0.5}>
-            <Icon name="camera" size={23} color="white" />
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => navigation.navigate("AddChat")}
+          >
+            <Icon name="group" size={23} color="white" />
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => navigation.navigate("Search")}
           >
-            <Icon name="pencil" size={23} color="white" />
+            <Icon name="search" size={23} color="white" />
           </TouchableOpacity>
         </View>
       ),
@@ -94,15 +97,19 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.mainBody}>
       <StatusBar style="light" />
-      <ScrollView style={{ height: "100%" }}>
-        {chats.map(({ id, data: { chatName } }) => (
-          <CustomListItem
-            key={id}
-            id={id}
-            chatName={chatName}
-            enterChat={enterChat}
-          />
-        ))}
+      <ScrollView style={{ height: '100%' }}>
+        {chats.map(({ id, data: { chatName, directChatname } }) => {
+          return (
+            directChatname ? <CustomListItem
+              key={id}
+              id={id}
+              chatName={directChatname.map((item) =>
+                item != auth.currentUser.displayName ? item : ""
+              )}
+              enterChat={enterChat} />
+              : <CustomListItem key={id} id={id} chatName={chatName} enterChat={enterChat} />
+          )
+        })}
       </ScrollView>
     </View>
   );
