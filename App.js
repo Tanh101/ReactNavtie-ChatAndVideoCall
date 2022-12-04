@@ -7,6 +7,7 @@ import RegisterScreen from "./Screens/RegisterScreen";
 import HomeScreen from "./Screens/HomeScreen";
 import AddChatScreen from "./Screens/AddChatScreen";
 import CallScreen from "./Screens/CallScreen";
+import ChatScreen from "./Screens/ChatScreen";
 
 const Stack = createNativeStackNavigator();
 const globalScreenOptions = {
@@ -24,6 +25,7 @@ export default function App() {
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="AddChat" component={AddChatScreen} />
+        <Stack.Screen name="ChatScreen" component={ChatScreen} />
         <Stack.Screen name="Call" component={CallScreen} />
       </Stack.Navigator>
     </NavigationContainer>

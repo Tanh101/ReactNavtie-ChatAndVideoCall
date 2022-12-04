@@ -12,6 +12,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomListItem from "../components/CustomListItem";
 import { Avatar } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { StatusBar } from 'expo-status-bar'
 
 const HomeScreen = ({ navigation }) => {
   const [chats, setChats] = useState([]);
@@ -67,17 +68,25 @@ const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       ),
-    });
-  }, [navigation]);
+    })
+  }, [navigation])
+
+  const enterChat = (id, chatName) => {
+    navigation.navigate('ChatScreen', {
+      id,
+      chatName,
+    })
+  }
 
   return (
-    <SafeAreaView style={styles.mainBody}>
-      <ScrollView style={{height: '100%'}}>
-        {chats.map(({id, data: {chatName}}) => (
-          <CustomListItem key={id} id={id} chatName={chatName}/>
+    <View style={styles.mainBody}>
+      <StatusBar style="light" />
+      <ScrollView style={{ height: '100%' }}>
+        {chats.map(({ id, data: { chatName } }) => (
+          <CustomListItem key={id} id={id} chatName={chatName} enterChat={enterChat} />
         ))}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
