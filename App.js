@@ -10,6 +10,9 @@ import CallScreen from "./Screens/CallScreen";
 import ChatScreen from "./Screens/ChatScreen";
 import IncomingCallScreen from "./Screens/InComingCallScreen";
 import CallingScreen from "./Screens/CallingScreen";
+import ProfileScreen from "./Screens/ProfileScreen";
+import SearchScreen from "./Screens/SearchScreen";
+
 
 const Stack = createNativeStackNavigator();
 const globalScreenOptions = {
@@ -31,6 +34,8 @@ export default function App() {
         <Stack.Screen name="Call" component={CallScreen} />
         <Stack.Screen name="InComingCall" component={IncomingCallScreen} />
         <Stack.Screen name="Calling" component={CallingScreen} />
+        <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+        <Stack.Screen name="Search" component={SearchScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
