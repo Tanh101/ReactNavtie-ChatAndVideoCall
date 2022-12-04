@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { InteractionManager, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./Screens/LoginScreen";
@@ -8,6 +8,7 @@ import HomeScreen from "./Screens/HomeScreen";
 import AddChatScreen from "./Screens/AddChatScreen";
 import CallScreen from "./Screens/CallScreen";
 import ChatScreen from "./Screens/ChatScreen";
+import IncomingCallScreen from "./Screens/InComingCallScreen";
 
 const Stack = createNativeStackNavigator();
 const globalScreenOptions = {
@@ -27,7 +28,7 @@ export default function App() {
         <Stack.Screen name="AddChat" component={AddChatScreen} />
         <Stack.Screen name="ChatScreen" component={ChatScreen} />
         <Stack.Screen name="Call" component={CallScreen} />
-        <Stack.Screen name="InCommingCall" component={IncomingCallScreen} />
+        <Stack.Screen name="InComingCall" component={IncomingCallScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
