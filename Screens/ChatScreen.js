@@ -42,10 +42,10 @@ const ChatScreen = ({ navigation, route }) => {
                         marginRight: 10
                     }}
                 >
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate("Calling") }>
                         <Icon name="videocam" size={26} color="white"></Icon>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate("InComingCall")}>
                         <Icon name="call" size={22} color="white"></Icon>
                     </TouchableOpacity>
                 </View>

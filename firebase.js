@@ -14,13 +14,15 @@ import firestore from 'firebase/firestore'
 //     appId: "1:109350846857:web:98f84b30b1944828f86158"
 // };
 const firebaseConfig = {
-    apiKey: "AIzaSyAAhTzg5wubtDg6AHR9xeUcI-pAkP365ew",
-    authDomain: "chatandvideoapp.firebaseapp.com",
-    projectId: "chatandvideoapp",
-    storageBucket: "chatandvideoapp.appspot.com",
-    messagingSenderId: "591899294904",
-    appId: "1:591899294904:web:95cba44f4421289132884d"
-  };
+    apiKey: "AIzaSyB9B3RwlJ9M8_IY2kjRvECZzTywNdYNPXc",
+    authDomain: "chatandvideocall-e3da8.firebaseapp.com",
+    databaseURL: "https://chatandvideocall-e3da8-default-rtdb.firebaseio.com",
+    projectId: "chatandvideocall-e3da8",
+    storageBucket: "chatandvideocall-e3da8.appspot.com",
+    messagingSenderId: "421032074068",
+    appId: "1:421032074068:web:d3528e5f2e52e560c486c1",
+    measurementId: "G-6HM8WZXL7W",
+};
 
 // Initialize Firebase
 let app;

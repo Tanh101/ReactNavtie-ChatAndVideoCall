@@ -9,6 +9,7 @@ import AddChatScreen from "./Screens/AddChatScreen";
 import CallScreen from "./Screens/CallScreen";
 import ChatScreen from "./Screens/ChatScreen";
 import IncomingCallScreen from "./Screens/InComingCallScreen";
+import CallingScreen from "./Screens/CallingScreen";
 
 const Stack = createNativeStackNavigator();
 const globalScreenOptions = {
@@ -29,6 +30,7 @@ export default function App() {
         <Stack.Screen name="ChatScreen" component={ChatScreen} />
         <Stack.Screen name="Call" component={CallScreen} />
         <Stack.Screen name="InComingCall" component={IncomingCallScreen} />
+        <Stack.Screen name="Calling" component={CallingScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
