@@ -38,13 +38,13 @@ const HomeScreen = ({ navigation }) => {
       headerLeft: () => (
         <View>
           <TouchableOpacity activeOpacity={0.5} onPress={signOutUser}>
-            {/* <Avatar rounded source={{ uri: auth?.currentUser?.photoURL }} /> */}
-            <Avatar
+            <Avatar rounded source={{ uri: auth?.currentUser?.photoURL }} />
+            {/* <Avatar
               rounded
               source={{
                 uri: "https://codefly.vn/wp-content/uploads/code/2020/12/11934/projecthtml/Source%20Code/uploadImage/Profile/blank_avatar.png",
               }}
-            />
+            /> */}
           </TouchableOpacity>
         </View>
       ),
