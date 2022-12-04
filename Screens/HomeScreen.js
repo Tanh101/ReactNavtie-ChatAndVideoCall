@@ -62,7 +62,7 @@ const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.5}
-            onPress={() => navigation.navigate("AddChat")}
+            onPress={() => navigation.navigate("InComingCall")}
           >
             <Icon name="pencil" size={23} color="white" />
           </TouchableOpacity>
