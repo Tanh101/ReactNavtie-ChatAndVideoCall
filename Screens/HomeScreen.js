@@ -12,7 +12,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomListItem from "../components/CustomListItem";
 import { Avatar } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { StatusBar } from 'expo-status-bar'
+import { StatusBar } from "expo-status-bar";
 
 const HomeScreen = ({ navigation }) => {
   const [chats, setChats] = useState([]);
@@ -22,9 +22,9 @@ const HomeScreen = ({ navigation }) => {
     });
   };
 
-  const profileUser = () =>{
-    navigation.navigate("ProfileScreen")
-  }
+  const profileUser = () => {
+    navigation.navigate("ProfileScreen");
+  };
   useEffect(() => {
     const unsubsribe = db.collection("chats").onSnapshot((snapshot) =>
       setChats(
@@ -41,7 +41,16 @@ const HomeScreen = ({ navigation }) => {
       title: "ChatApp",
       headerTitleAlign: "center",
       headerLeft: () => (
-        <View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: 65,
+          }}
+        >
+          <TouchableOpacity activeOpacity={0.5} onPress={signOutUser}>
+            <Icon name="arrow-left" size={23} color="white" />
+          </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.5} onPress={profileUser}>
             <Avatar rounded source={{ uri: auth?.currentUser?.photoURL }} />
             {/* <Avatar
@@ -72,22 +81,27 @@ const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       ),
-    })
-  }, [navigation])
+    });
+  }, [navigation]);
 
   const enterChat = (id, chatName) => {
-    navigation.navigate('ChatScreen', {
+    navigation.navigate("ChatScreen", {
       id,
       chatName,
-    })
-  }
+    });
+  };
 
   return (
     <View style={styles.mainBody}>
       <StatusBar style="light" />
-      <ScrollView style={{ height: '100%' }}>
+      <ScrollView style={{ height: "100%" }}>
         {chats.map(({ id, data: { chatName } }) => (
-          <CustomListItem key={id} id={id} chatName={chatName} enterChat={enterChat} />
+          <CustomListItem
+            key={id}
+            id={id}
+            chatName={chatName}
+            enterChat={enterChat}
+          />
         ))}
       </ScrollView>
     </View>

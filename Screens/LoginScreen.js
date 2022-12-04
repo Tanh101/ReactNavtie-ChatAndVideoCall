@@ -1,33 +1,54 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { Button, TextInput, Image, StatusBar } from "react-native";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
 
-  useEffect(( )=> {
-    const unsubcribe = auth.onAuthStateChanged(user => {
+
+  const cache = async (user) =>{
+    try {
+      await AsyncStorage.setItem("displayName", user.displayName);
+      await AsyncStorage.setItem("photoURL", user.photoURL);
+    } catch (e) {
+      console.log(e);
+    }
+    try {
+      const jsonValue = await AsyncStorage.getItem('displayName')
+      console.log("cache: " +jsonValue);
+    } catch(e) {
+        console.log(e);
+    }
+  }
+  useEffect(() => {
+    const unsubcribe = auth.onAuthStateChanged((user) => {
       if (user) {
+        cache(user)
         navigation.replace("Home");
       }
-    })
+    });
     return unsubcribe;
-  }, [])
-
-  
+  }, []);
 
   const handleLogin = () => {
     auth
       .signInWithEmailAndPassword(email, password)
-      .then(userCredentials => {
+      .then((userCredentials) => {
         const user = userCredentials.user;
-        console.log('Logged in with: ', user.email);
+        // console.log("Logged in with: ", user.email);
       })
-      .catch(error => alert(error.message))
-  }
+      .catch((error) => alert(error.message));
+  };
   return (
     <View style={styles.mainBody}>
       <StatusBar styles="light" />
@@ -60,13 +81,16 @@ const LoginScreen = () => {
         />
       </View>
 
-      <TouchableOpacity style={styles.buttonStyle} activeOpacity={0.5}
-        onPress={handleLogin}>
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        activeOpacity={0.5}
+        onPress={handleLogin}
+      >
         <Text style={styles.buttonTextStyle}>LOGIN</Text>
       </TouchableOpacity>
       <Text
         style={styles.registerTextStyle}
-        onPress={()=> navigation.navigate('Register')}
+        onPress={() => navigation.navigate("Register")}
       >
         New here ? Register
       </Text>
@@ -107,7 +131,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height: 50,
     borderColor: "#06DE8B",
-    borderBottomColor: "#06DE8B"
+    borderBottomColor: "#06DE8B",
   },
   buttonStyle: {
     backgroundColor: "#06DE8B",
@@ -127,11 +151,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   registerTextStyle: {
-    color: '#06DE8B',
-    textAlign: 'center',
-    fontWeight: 'bold',
+    color: "#06DE8B",
+    textAlign: "center",
+    fontWeight: "bold",
     fontSize: 17,
-    alignSelf: 'center',
+    alignSelf: "center",
     padding: 10,
   },
 });
