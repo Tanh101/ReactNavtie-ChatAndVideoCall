@@ -27,6 +27,7 @@ export default function App() {
         <Stack.Screen name="AddChat" component={AddChatScreen} />
         <Stack.Screen name="ChatScreen" component={ChatScreen} />
         <Stack.Screen name="Call" component={CallScreen} />
+        <Stack.Screen name="InCommingCall" component={IncomingCallScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
