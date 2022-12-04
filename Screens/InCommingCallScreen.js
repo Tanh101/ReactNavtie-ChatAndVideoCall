@@ -32,6 +32,8 @@ const IncomingCallScreen = () => {
   const onAccept = () => {
     navigation.navigate('Calling', {
       call,
+
+      
       isIncomingCall: true,
     });
   };
