@@ -21,6 +21,10 @@ const HomeScreen = ({ navigation }) => {
       navigation.replace("Login");
     });
   };
+
+  const profileUser = () =>{
+    navigation.navigate("ProfileScreen")
+  }
   useEffect(() => {
     const unsubsribe = db.collection("chats").onSnapshot((snapshot) =>
       setChats(
@@ -38,7 +42,7 @@ const HomeScreen = ({ navigation }) => {
       headerTitleAlign: "center",
       headerLeft: () => (
         <View>
-          <TouchableOpacity activeOpacity={0.5} onPress={signOutUser}>
+          <TouchableOpacity activeOpacity={0.5} onPress={profileUser}>
             <Avatar rounded source={{ uri: auth?.currentUser?.photoURL }} />
             {/* <Avatar
               rounded

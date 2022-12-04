@@ -7,43 +7,38 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { auth } from "../firebase";
 
-const RegisterScreen = ({ navigation }) => {
+const ProfileScreen = ({ navigation }) => {
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerBackTitle: "Back to Login",
+  useEffect(() => {
+    setDisplayName(auth?.currentUser?.displayName);
+    setImageUrl(auth?.currentUser?.photoURL);
+  }, []);
+
+  const updateProfile = () => {
+    const user = auth.currentUser;
+    user.updateProfile({
+      displayName: displayName,
+      photoURL: imageUrl,
+    }).then (()=>{
+        alert("UPDATE SUCCESS!")
+    }).then(() => {
+        navigation.navigate("Home")
     });
-  }, [navigation]);
-
-  const register = () => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((authUser) => {
-        const user = authUser.user;
-        console.log('Registered with: ', user.email);
-        user.updateProfile({
-          displayName: displayName,
-          photoURL:
-          imageUrl ? imageUrl : 'https://codefly.vn/wp-content/uploads/code/2020/12/11934/projecthtml/Source%20Code/uploadImage/Profile/blank_avatar.png'
-
-        });
-      })
-      .catch(error => alert(error.message))
-  }
+  };
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.mainBody}>
       <StatusBar style="light" />
-      <ScrollView >
-        <Text style={styles.title}>Create a signal account</Text>
+      <ScrollView>
+        <Text style={styles.title}>USER</Text>
         <View style={styles.SectionStyle}>
           <TextInput
             style={styles.inputStyle}
@@ -57,55 +52,25 @@ const RegisterScreen = ({ navigation }) => {
         <View style={styles.SectionStyle}>
           <TextInput
             style={styles.inputStyle}
-            placeholder="Enter Email"
-            placeholderTextColor="#8b9cb5"
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-          />
-        </View>
-        <View style={styles.SectionStyle}>
-          <TextInput
-            style={styles.inputStyle}
-            placeholder="Enter Password"
-            placeholderTextColor="#8b9cb5"
-            secureTextEntry
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-          />
-        </View>
-        <View style={styles.SectionStyle}>
-          <TextInput
-            style={styles.inputStyle}
-            placeholder="Confirm Password"
-            placeholderTextColor="#8b9cb5"
-            secureTextEntry
-          />
-        </View>
-        <View style={styles.SectionStyle}>
-          <TextInput
-            style={styles.inputStyle}
             placeholder="Profile Picture URL (optional)"
             placeholderTextColor="#8b9cb5"
             value={imageUrl}
             onChangeText={(text) => setImageUrl(text)}
           />
         </View>
-        <TouchableOpacity style={styles.buttonStyle} activeOpacity={0.5}
-          onPress={register}>
-          <Text style={styles.buttonTextStyle}>REGISTER</Text>
-        </TouchableOpacity>
-        <Text
-          style={styles.loginTextStyle}
-          onPress={() => navigation.navigate("Login")}
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          activeOpacity={0.5}
+          onPress={updateProfile}
         >
-          Already have an account. Login now ?
-        </Text>
+          <Text style={styles.buttonTextStyle}>UPDATE</Text>
+        </TouchableOpacity>
       </ScrollView>
     </KeyboardAvoidingView>
   );
 };
 
-export default RegisterScreen;
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
   mainBody: {

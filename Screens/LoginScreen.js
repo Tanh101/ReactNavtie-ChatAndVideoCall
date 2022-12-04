@@ -10,7 +10,6 @@ const LoginScreen = () => {
 
   useEffect(( )=> {
     const unsubcribe = auth.onAuthStateChanged(user => {
-      console.log(user.photoURL);
       if (user) {
         navigation.replace("Home");
       }
