@@ -8,6 +8,7 @@ import {
 import React, { useLayoutEffect, useState } from "react";
 import { Icon, Input } from "react-native-elements";
 import { StatusBar } from "expo-status-bar";
+import { db } from "../firebase";
 
 const AddChatScreen = ({ navigation }) => {
   const [input, setInput] = useState("");
@@ -21,8 +22,16 @@ const AddChatScreen = ({ navigation }) => {
   }, [navigation]);
 
   const createChat = async () => {
-
-  }
+    await db
+      .collection("chats")
+      .add({
+        chatName: input,
+      })
+      .then(() => {
+        navigation.goBack();
+      })
+      .catch((error) => alert(error));
+  };
 
   return (
     <View style={styles.mainBody}>
@@ -35,11 +44,15 @@ const AddChatScreen = ({ navigation }) => {
           placeholder="Enter a chat name"
           placeholderTextColor="#8b9cb5"
           autoFocus
+          onSubmitEditing={createChat}
         />
       </View>
 
-      <TouchableOpacity style={styles.buttonStyle} activeOpacity={0.5}
-      onPress={createChat}>
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        activeOpacity={0.5}
+        onPress={createChat}
+      >
         <Text style={styles.buttonTextStyle}>Create new chat</Text>
       </TouchableOpacity>
     </View>
