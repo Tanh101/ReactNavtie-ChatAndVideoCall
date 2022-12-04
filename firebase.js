@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
-import * as firebase from 'firebase';
-import firestore from 'firebase/firestore'
+import * as firebase from "firebase";
+import firestore from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -14,21 +14,21 @@ import firestore from 'firebase/firestore'
 //     appId: "1:109350846857:web:98f84b30b1944828f86158"
 // };
 const firebaseConfig = {
-    apiKey: "AIzaSyAAhTzg5wubtDg6AHR9xeUcI-pAkP365ew",
-    authDomain: "chatandvideoapp.firebaseapp.com",
-    projectId: "chatandvideoapp",
-    storageBucket: "chatandvideoapp.appspot.com",
-    messagingSenderId: "591899294904",
-    appId: "1:591899294904:web:95cba44f4421289132884d"
-  };
+  apiKey: "AIzaSyAb-F5EeGyegGOb1w6aT4SE_SnymR6gHRo",
+  authDomain: "chatandvideocall-10db9.firebaseapp.com",
+  projectId: "chatandvideocall-10db9",
+  storageBucket: "chatandvideocall-10db9.appspot.com",
+  messagingSenderId: "735632667107",
+  appId: "1:735632667107:web:6ff415000e444b739a30d6",
+};
 
 // Initialize Firebase
 let app;
 
 if (firebase.apps.length === 0) {
-    app = firebase.initializeApp(firebaseConfig);
+  app = firebase.initializeApp(firebaseConfig);
 } else {
-    app = firebase.app();
+  app = firebase.app();
 }
 
 const auth = firebase.auth();
