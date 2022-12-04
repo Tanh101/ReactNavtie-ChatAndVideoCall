@@ -6,45 +6,62 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Image,
 } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { auth } from "../firebase";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const ProfileScreen = ({ navigation }) => {
   const [displayName, setDisplayName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
+  const getData = async () => {
+    try {
+      const displayName = await AsyncStorage.getItem("displayName");
+      const photoURL = await AsyncStorage.getItem("photoURL");
+      setDisplayName(displayName);
+      setImageUrl(photoURL);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   useEffect(() => {
-    setDisplayName(auth?.currentUser?.displayName);
-    setImageUrl(auth?.currentUser?.photoURL);
+    // setDisplayName(auth?.currentUser?.displayName);
+    // setImageUrl(auth?.currentUser?.photoURL);
+    getData();
   }, []);
 
   const updateProfile = () => {
     const user = auth.currentUser;
-    user.updateProfile({
-      displayName: displayName,
-      photoURL: imageUrl,
-    }).then (()=>{
-        alert("UPDATE SUCCESS!")
-    }).then(() => {
-        navigation.navigate("Home")
-    });
+    user
+      .updateProfile({
+        displayName: displayName,
+        photoURL: imageUrl,
+      })
+      .then(() => {
+        alert("UPDATE SUCCESS!");
+      })
+      .then(() => {
+        navigation.navigate("Home");
+      });
   };
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.mainBody}>
       <StatusBar style="light" />
       <ScrollView>
-        <Text style={styles.title}>USER</Text>
+        <Image
+          style={{height: 50, width: 50, borderRadius: 50, marginLeft:150, marginTop:20}}
+          source={{
+            uri: imageUrl,
+          }}
+        />
         <View style={styles.SectionStyle}>
           <TextInput
             style={styles.inputStyle}
             placeholder="Enter Display Name"
             placeholderTextColor="#8b9cb5"
-            autoFocus
             value={displayName}
             onChangeText={(text) => setDisplayName(text)}
           />
