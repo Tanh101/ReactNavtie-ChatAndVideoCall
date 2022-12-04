@@ -14,23 +14,21 @@ import firestore from "firebase/firestore";
 //     appId: "1:109350846857:web:98f84b30b1944828f86158"
 // };
 const firebaseConfig = {
-  apiKey: "AIzaSyB9B3RwlJ9M8_IY2kjRvECZzTywNdYNPXc",
-  authDomain: "chatandvideocall-e3da8.firebaseapp.com",
-  databaseURL: "https://chatandvideocall-e3da8-default-rtdb.firebaseio.com",
-  projectId: "chatandvideocall-e3da8",
-  storageBucket: "chatandvideocall-e3da8.appspot.com",
-  messagingSenderId: "421032074068",
-  appId: "1:421032074068:web:d3528e5f2e52e560c486c1",
-  measurementId: "G-6HM8WZXL7W",
+    apiKey: "AIzaSyAp6X58VRfIE--8RR6-gKxQ7MdqFhq8f7I",
+    authDomain: "messengerdemo-f9832.firebaseapp.com",
+    projectId: "messengerdemo-f9832",
+    storageBucket: "messengerdemo-f9832.appspot.com",
+    messagingSenderId: "214757913052",
+    appId: "1:214757913052:web:f35a0c1cfebb2b42979f19"
 };
 
 // Initialize Firebase
 let app;
 
 if (firebase.apps.length === 0) {
-  app = firebase.initializeApp(firebaseConfig);
+    app = firebase.initializeApp(firebaseConfig);
 } else {
-  app = firebase.app();
+    app = firebase.app();
 }
 
 const auth = firebase.auth();
