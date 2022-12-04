@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 
 const RegisterScreen = ({ navigation }) => {
   const [displayName, setDisplayName] = useState("");
@@ -23,8 +23,8 @@ const RegisterScreen = ({ navigation }) => {
     });
   }, [navigation]);
 
-  const register = () => {
-    auth
+  const register = async () => {
+    await auth
       .createUserWithEmailAndPassword(email, password)
       .then((authUser) => {
         const user = authUser.user;
@@ -35,12 +35,23 @@ const RegisterScreen = ({ navigation }) => {
           imageUrl ? imageUrl : 'https://codefly.vn/wp-content/uploads/code/2020/12/11934/projecthtml/Source%20Code/uploadImage/Profile/blank_avatar.png'
 
         });
+        db.collection("users")
+          .doc(user.uid)
+          .set({
+            uid: user.uid,
+            displayName,
+            email,
+            imageUrl: imageUrl,
+          })
+        db.collection("userChats")
+          .doc(user.uid)
+          .set({})
       })
       .catch(error => alert(error.message))
   }
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.mainBody}>
+    <View behavior="padding" style={styles.mainBody}>
       <StatusBar style="light" />
       <ScrollView >
         <Text style={styles.title}>Create a signal account</Text>
@@ -101,7 +112,7 @@ const RegisterScreen = ({ navigation }) => {
           Already have an account. Login now ?
         </Text>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
@@ -109,6 +120,7 @@ export default RegisterScreen;
 
 const styles = StyleSheet.create({
   mainBody: {
+    paddingTop: 10,
     flex: 1,
     justifyContent: "center",
     alignContent: "center",
